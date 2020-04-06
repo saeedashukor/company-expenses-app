@@ -44,7 +44,7 @@ export default {
           },
           {
             name: 'View employee requests (m)',
-            url: '',
+            url: '/manager/request-view',
             icon: 'icon-docs'
           }
         ],
