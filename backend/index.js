@@ -12,6 +12,7 @@ const schema = buildSchema(`
     id: Int
     name: String
     job_role: String
+    department: String
     email: String
     password: String
   }
