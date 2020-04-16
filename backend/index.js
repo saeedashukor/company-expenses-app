@@ -3,6 +3,7 @@ const graphqlHTTP = require('express-graphql');
 const { buildSchema } = require('graphql');
 const mysql = require('mysql');
 const cors = require('cors')
+const db_ip = '167.71.54.101'; //TODO replace this with the internal IP after deployment
 
 const app = express();
 app.use(cors())
@@ -45,10 +46,10 @@ const root = {
 
 app.use((req, res, next) => {
   req.mysqlDb = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'root',
-    password : '',
-    database : 'users'
+    host     : db_ip, 
+    user     : 'expense_user',
+    password : '5A)k-^Hz|T^McQ]vZ5*$b_+ySt',
+    database : 'company_expenses'
   });
   req.mysqlDb.connect();
   next();
