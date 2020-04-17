@@ -1,0 +1,38 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "target": "es2015",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext",
+      "ES2018"
+    ],
+    "typeRoots": [
+      "node_modules/@types",
+      "./custom_typings",
+    ],
+    "sourceMap": true,
+    "declaration": false,
+    "allowJs": true,
+    "noImplicitAny": false,
+    "skipLibCheck": true,
+    "esModuleInterop": false, // set as false instead of true
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react"
+  },
+  "include": [
+    "src"
+  ]
+}
