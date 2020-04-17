@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "company-expenses",
   "version": "1.0.0",
   "description": "",
   "main": "dist/server.js",
