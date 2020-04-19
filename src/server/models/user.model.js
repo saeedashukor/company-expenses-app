@@ -1,5 +1,4 @@
-const { Sequelize, Model, DataTypes } = require('sequelize');
-const { Expense } = require('../models/expense.model');
+const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize, Sequelize) => {
     const User = sequelize.define("user", {
@@ -35,22 +34,6 @@ module.exports = (sequelize, Sequelize) => {
     }, {
       updatedAt: false,
     });
-    User.hasMany(Expense, { foreignKey: 'id' })
+
     return User;
   };
-/*
-
-CREATE TABLE IF NOT EXISTS `users` (
-  `id` VARCHAR(255) UNIQUE NOT NULL,
-  `email` VARCHAR(100) NOT NULL,
-  `password` VARCHAR(100) NOT NULL,
-  `first_name` VARCHAR(100) NOT NULL,
-  `last_name` VARCHAR(100) NOT NULL,
-  `role` ENUM('Admin','Auditor','Manager','Employee','User') DEFAULT 'User',
-  `department` ENUM('Marketing','IT','HR','Finance','Operations') NOT NULL,
-    `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-  PRIMARY KEY (`id`)
-) ENGINE=INNODB CHARACTER SET latin1 COLLATE latin1_bin;
-
-*/

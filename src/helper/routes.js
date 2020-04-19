@@ -1,27 +1,26 @@
 import Profile from '../components/User/Profile';
 import Login from '../components/User/Login';
 import Request from '../components/Employee/Request';
-/*
-import EmployeeView from '';
-import AuditorView from '';
-import ManagerView from '';
-import AdminView from '';
-import PreviewRequest from '';
-import CreateUser from '';
-*/
+import EmployeeView from '../components/Employee/EmployeeView';
+import ManagerExpense from '../components/Manager/ManagerExpense';
+import ManagerRequest from '../components/Manager/ManagerRequest';
+import AuditorFlagged from '../components/Auditor/AuditorFlagged';
+import AdminOngoing from '../components/Admin/AdminOngoing';
+import AdminCreate from '../components/Admin/AdminCreate';
+import Restricted from '../components/User/Restricted';
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/profile', name: 'Profile', component: Profile },
   { path: '/login', name: 'Login', component: Login },
   { path: '/emp/request', name: 'Request', component: Request },
-  /*
-  { path: '/emp/view', name: 'Employee View Request', component: EmployeeView },
-  { path: '/aud/view', name: 'Auditor View Request' , component: AuditorView },
-  { path: '/man/view', name: 'Manager View Request', component: ManagerView },
-  { path: '/admin/view', name: 'Admin View Request', component: AdminView },
-  { path: '/admin/create', name: 'Admin Create User', component: CreateUser },
-  */
+  { path: '/emp/view', name: 'Employee View', component: EmployeeView },
+  { path: '/man/request', name: 'Employee Requests', component: ManagerRequest },
+  { path: '/man/expense', name: 'Employee Expenses', component: ManagerExpense },
+  { path: '/auditor/flagged', name: 'Flagged Requests', component: AuditorFlagged },
+  { path: '/admin/ongoing', name: 'Ongoing Requests', component: AdminOngoing },
+  { path: '/admin/create', name: 'Create User', component: AdminCreate },
+  { path: '/restricted', name: 'Restricted', component: Restricted }
 ];
 
 

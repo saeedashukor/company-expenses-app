@@ -14,32 +14,68 @@ import {
   Row,
 } from 'reactstrap';
 import AuthService from '../../helper/auth.service'
-import axios from 'axios';
-import fs from 'fs';
+import RequestService from '../../helper/request.service';
 
 class Request extends Component{
   constructor(props) {
     super(props);
+    this.onAmountChange = this.onAmountChange.bind(this);
+    this.onCategoryChange = this.onCategoryChange.bind(this);
+    this.onDateChange = this.onDateChange.bind(this);
+    this.fileInput = React.createRef();
+    this.onPurposeChange = this.onPurposeChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
 
-    this.toggle = this.toggle.bind(this);
-    this.toggleFade = this.toggleFade.bind(this);
     this.state = {
       currentUser: AuthService.getCurrentUser(),
-      collapse: true,
-      fadeIn: true,
-      timeout: 300,
-      expense: {
-        id:'',
-        date: '',
-        purpose: '',
-        amount: 0,
-        description: '',
-        category: '',
-        status: 'Ongoing',
-        image: '',
-        created_at: ''
-      }
+      expense_id: '',
+      id: '',
+      date: '',
+      purpose: '',
+      amount: 0,
+      description: '',
+      category: '',
+      image: '',
     }
+  }
+
+  onDateChange(e){
+    this.setState({date:e.target.value});
+  }
+
+  onPurposeChange(e){
+    this.setState({purpose:e.target.value});
+  }
+
+  onCategoryChange(e){
+    this.setState({category:e.target.value});
+  }
+
+  onDescriptionChange(e){
+    this.setState({description:e.target.value});
+  }
+
+  onAmountChange(e){
+    this.setState({amount:e.target.value});
+  }
+
+  onSubmit(e){
+    const { currentUser } = this.state.currentUser;
+
+    e.preventDefault();
+    this.setState({
+      id: currentUser.id,
+      image: this.fileInput.current.files[0].name
+    });
+    RequestService.createRequest(this.state.expense_id,this.state.id, this.state.date, 
+      this.state.purpose, this.state.amount, this.state.description, 
+      this.state.category, Date.now(),this.state.image
+      ).then( () => {
+        console.log("Request submitted!");
+        this.props.history.push('/emp/view');
+      }).catch(err => {
+        console.log(err);
+      })
   }
 
   componentWillMount(){
@@ -50,54 +86,10 @@ class Request extends Component{
     else{
       const currentUser = this.state.currentUser;
       if(currentUser.role !== "Employee"){
-        this.props.history.push('/home');
+        this.props.history.push('/restricted');
         window.location.reload();
       }
     }
-  }
-
-  onDateChange(e){
-    this.setState({
-      expense: { date: e.target.value }
-    });
-  }
-
-  onPurposeChange(e){
-    this.setState({
-      expense: { purpose: e.target.value }
-    });
-  }
-
-  onCategoryChange(e){
-    this.setState({
-      expense: { category: e.target.value }
-    });
-  }
-
-  onDescriptionChange(e){
-    this.setState({
-      expense: { description: e.target.value }
-    });
-  }
-
-  onAmountChange(e){
-    this.setState({
-      expense: { amount: e.target.value }
-    });
-  }
-
-  onImageChange(e){
-    this.setState({
-      image: fs.readFileSync(e.target.files)
-    })
-  }
-
-  toggle() {
-    this.setState({ collapse: !this.state.collapse });
-  }
-
-  toggleFade() {
-    this.setState((prevState) => { return { fadeIn: !prevState }});
   }
 
   render() {
@@ -113,7 +105,7 @@ class Request extends Component{
                 <strong>Reimbursement Request Form</strong>
               </CardHeader>
               <CardBody>
-                <Form action="" method="post" encType="multipart/form-data" className="form-horizontal">
+                <Form action="" onSubmit={this.onSubmit} method="post" encType="multipart/form-data" className="form-horizontal">
                   <FormGroup row>
                     <Col md="3">
                       <Label>Employee Name</Label><br />
@@ -181,7 +173,7 @@ class Request extends Component{
                       <Label htmlFor="text-input">Attachment</Label>
                     </Col>
                     <Col xs="12" md="9">
-                    <Input type="file" name="uploaded_image" onIm accept="image/x-png,image/jpeg,image/jpg,application/pdf" required/>
+                    <Input type="file" name="uploaded_image" onIm accept="image/*,application/pdf" ref={this.fileInput} required/>
                       <FormText color="muted">Please attach receipt or invoice (.JPEG, .JPG, .PNG, .PDF)</FormText>
                     </Col>
                   </FormGroup>

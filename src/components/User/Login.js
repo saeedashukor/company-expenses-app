@@ -17,6 +17,10 @@ class Login extends Component {
       message: ""
     };
   }
+  
+  componentWillMount(){
+    localStorage.removeItem("user");
+  }
 
   handleEmailChange(e){
     this.setState({

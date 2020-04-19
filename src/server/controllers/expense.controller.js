@@ -21,6 +21,7 @@ exports.getExpenses = async (req,res) => {
 exports.createExpense = async (req, res) => {
   // Create Expense
   var post = req.body;
+  const expense_id="";
   const id = post.id;
   const date = post.date;
   const purpose = post.purpose;
@@ -28,18 +29,12 @@ exports.createExpense = async (req, res) => {
   const description = post.description;
   const category = post.category;
   const status = "Ongoing";
+  const image = post.image;
   const created_at = Sequelize.literal('CURRENT_TIMESTAMP');
 
-  var file = req.files.uploaded_image;
-  var img_name = file.name;
-  file.mv('/src/image'+file.name, function(err){
-    if(err){
-      return res.status(500).send(err);
-    }
-  })
-
-  // Save User in the database
+  // Save Expense in the database
   const expense = await Expense.create({
+    expense_id: expense_id,
     id: id,
     date: date,
     purpose: purpose,
@@ -47,7 +42,7 @@ exports.createExpense = async (req, res) => {
     description: description,
     category: category,
     status: status,
-    image: img_name,
+    image: image,
     created_at: created_at
   },{
     fields: ['expense_id','id','date','purpose','amount','description','category','status','image','created_at']
@@ -64,6 +59,8 @@ exports.createExpense = async (req, res) => {
     });
     
 };
+
+
 
 // Retrieve all ONGOING expenses by ID (FOR EMPLOYEE)
 exports.getOngoingByID = (req,res) => {
@@ -106,6 +103,31 @@ exports.getCompleteByID = (req, res) => {
       });
     
 }
+
+// Retrieve all expenses by employee ID
+exports.getExpensesByID = (req, res) => {
+  const employeeID = req.params.id;
+  
+  Expense.findAll({ 
+      where: {
+          id: employeeID,
+      },
+      order: [
+        ['created_at','DESC']
+      ]
+  })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving expenses."
+      });
+    });
+  
+}
+
 // Retrieve all ONGOING expenses by Department (FOR MANAGER)
 exports.getOngoingByDept = (req, res) => {
     const department = req.query.department;

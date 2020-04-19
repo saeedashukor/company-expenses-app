@@ -18,6 +18,8 @@ module.exports = app => {
   // Retrieve all PAST (COMPLETE) expenses by ID
   router.get("/emp/complete", expense.getCompleteByID);
 
+  router.get("/emp/expense/:id", expense.getExpensesByID);
+
   /////////////////////////////////////////////////////
   /*
     FOR MANAGER
@@ -54,5 +56,5 @@ module.exports = app => {
   // Delete expense by ID
   router.delete("/admin/:id", expense.delete);
 
-  app.use('/api/expense', router);
+  app.use('/api', router);
 }
