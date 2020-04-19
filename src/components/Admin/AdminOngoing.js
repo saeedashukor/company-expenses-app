@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
+import { Card, CardBody, CardHeader, Col, Row, Table,Badge } from 'reactstrap';
 import AuthService from '../../helper/auth.service';
 
 class AdminOngoing extends Component{
@@ -27,8 +27,56 @@ class AdminOngoing extends Component{
     const { currentUser } = this.state;
     return (
       <div className="animated fadeIn">
+      <Row>
+        <Col xs="12" lg="12">
+          <Card>
+            <CardHeader>
+              <i className="fa fa-align-justify"></i> <b>View Expenses</b>
+            </CardHeader>
+            <CardBody>
+              <Table responsive>
+                <thead>
+                <tr>
+                  <th>Expense ID</th>
+                  <th>Date</th>
+                  <th>Purpose</th>
+                  <th>Amount</th>
+                  <th>Description</th>
+                  <th>Category</th>
+                  <th>Status</th>
+                </tr>
+                <tr>
+                  <td>1</td>
+                  <td>2020-01-14</td>
+                  <td>Business meeting</td>
+                  <td>23.00</td>
+                  <td>Uber</td>
+                  <td>Transport</td>
+                  <td><Badge color="warning">Ongoing</Badge></td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>2020-02-25</td>
+                  <td>Business conference</td>
+                  <td>120.00</td>
+                  <td>Dukes Hotel</td>
+                  <td>Accomodation</td>
+                  <td><Badge color="warning">Ongoing</Badge></td>
+                </tr>
 
-    </div>
+
+                </thead>
+                <tbody>
+                <tr>
+                </tr>
+                </tbody>
+              </Table>
+              </CardBody>
+              </Card>
+              </Col>
+              </Row>
+
+  </div>
     )
   }
 }

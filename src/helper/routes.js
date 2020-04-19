@@ -8,9 +8,11 @@ import AuditorFlagged from '../components/Auditor/AuditorFlagged';
 import AdminOngoing from '../components/Admin/AdminOngoing';
 import AdminCreate from '../components/Admin/AdminCreate';
 import Restricted from '../components/User/Restricted';
+import Dashboard from '../components/User/Dashboard'
 
 const routes = [
-  { path: '/', exact: true, name: 'Home' },
+  { path: '/', exact: true, name: 'Home'},
+  { path: '/home', name: 'Dashboard', component: Dashboard },
   { path: '/profile', name: 'Profile', component: Profile },
   { path: '/login', name: 'Login', component: Login },
   { path: '/emp/request', name: 'Request', component: Request },

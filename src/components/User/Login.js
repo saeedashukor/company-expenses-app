@@ -99,13 +99,7 @@ class Login extends Component {
                       <h3><b>Company Expenses App</b></h3>
                       <p>Welcome to our web app! <br>
                       </br>Please <b>login</b> to start.</p>
-                          <b>Test users:</b><br/>
-                          <small>
-                          Admin: peter@gmail.com, peter<br />
-                          Employee: john@gmail.com, john<br />
-                          Manager: rob@outlook.com, rob<br />
-                          Auditor: jane@gmail.com, jane<br/>
-                      </small>
+
                     </div>
                   </CardBody>
                 </Card>

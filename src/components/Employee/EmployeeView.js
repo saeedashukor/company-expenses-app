@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
+import { Card, CardBody, CardHeader, Col, Row, Table, Badge } from 'reactstrap';
 import AuthService from '../../helper/auth.service';
 import axios from 'axios';
 
@@ -8,17 +8,10 @@ class EmployeeView extends Component{
         super(props);
       this.state = {
           currentUser: AuthService.getCurrentUser(),
-          requests: [{
-            expense_id: '',
-            date: '',
-            purpose: '',
-            amount: '',
-            description:'',
-            category:'',
-            status:''
-          }]
+          requests: []
       }
     }
+    
     colourChange(status){
       if(status === "Ongoing" || status ==="Flagged"){
         return `warning`;
@@ -50,29 +43,53 @@ class EmployeeView extends Component{
 
       componentDidMount(){
         const { currentUser } = this.state;
-        const results = axios.get('http://localhost:3000/api/emp/expense/'+currentUser.id)
+        axios.get('http://localhost:3000/api/emp/expense/'+currentUser.id)
           .then(res => {
             this.setState({
-              requests: {
-                expense_id: results.expense_id,
-                date: results.date,
-                purpose: results.purpose,
-                amount: results.amount,
-                description: results.description,
-                category: results.category,
-                status: results.status
-              }
-            });
+              requests: res
+            })
             console.log(res);
           })
           .catch(err => {
             console.log(err);
-          })
+          });
+      }
+
+      mapRequests(){
+        let data = [];
+        let requests = this.state.requests;
+        for(let i =0;i<requests.length; i++){
+          data.push({
+            expense_id: requests[i].expense_id,
+            date: requests[i].date,
+            purpose: requests[i].purpose,
+            amount: requests[i].amount,
+            category: requests[i].category,
+            description: requests[i].description,
+            status: requests[i].status
+          });
+        }
+        return (
+          <>
+          {data.length > 0 ? (
+            data.map((s) => {
+              return(
+                <>
+                </>
+              );
+            })
+          ) : (
+            <>
+            </>
+          )}
+          </>
+        );
         
       }
 
   render() {
-    const { currentUser } = this.state;
+    const { currentUser } = this.state.currentUser;
+    const { requests } = this.state.requests;
 
     return (
       <div className="animated fadeIn">
@@ -90,22 +107,33 @@ class EmployeeView extends Component{
                     <th>Date</th>
                     <th>Purpose</th>
                     <th>Amount</th>
-                    <th>Category</th>
                     <th>Description</th>
+                    <th>Category</th>
                     <th>Status</th>
                   </tr>
+                  <tr>
+                    <td>1</td>
+                    <td>2020-01-14</td>
+                    <td>Business meeting</td>
+                    <td>23.00</td>
+                    <td>Uber</td>
+                    <td>Transport</td>
+                    <td><Badge color="warning">Ongoing</Badge></td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>2020-02-25</td>
+                    <td>Business conference</td>
+                    <td>120.00</td>
+                    <td>Dukes Hotel</td>
+                    <td>Accomodation</td>
+                    <td><Badge color="warning">Ongoing</Badge></td>
+                  </tr>
+
+
                   </thead>
                   <tbody>
                   <tr>
-                    <td>Samppa Nori</td>
-                    <td>2012/01/01</td>
-                    <td>Member</td>
-                    <td>Member</td>
-                    <td>Member</td>
-                    <td>Member</td>
-                    <td>
-                      <Badge>Active</Badge>
-                    </td>
                   </tr>
                   </tbody>
                 </Table>
