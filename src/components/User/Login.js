@@ -9,12 +9,14 @@ class Login extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
-
+    this.incorrectDetails = this.incorrectDetails.bind(this);
+    
     this.state = {
       email: "",
       password: "",
       loading: false,
-      message: ""
+      message: "",
+      incorrect: false,
     };
   }
   
@@ -33,6 +35,22 @@ class Login extends Component {
     });
   }
 
+  incorrectDetails(bool){
+    this.setState({
+      incorrect: bool
+    });
+  }
+
+  message(){
+    if(this.state.incorrect === true){
+      return(
+        <>
+        <p className="danger">Incorrect email or password!</p>
+        </>
+      )
+    }
+  }
+
   handleSubmit(e){
     e.preventDefault();
     this.setState({
@@ -41,12 +59,19 @@ class Login extends Component {
     });
 
     AuthService.login(this.state.email, this.state.password).then(
-      () => {
-        this.props.history.push('/home');
-        window.location.reload();
+      (res) => {
+        if(res == null){
+          this.incorrectDetails(true);
+        }
+        else{
+          this.incorrectDetails(false);
+          this.props.history.push('/home');
+          window.location.reload();
+        }
       },
       error => {
         const resMessage = (error.response && error.data && error.response.data.message) || (error.message) || error.toString();
+        console.log(resMessage);
         this.setState({
           loading: false,
           message: resMessage
@@ -82,8 +107,8 @@ class Login extends Component {
                           </InputGroupText>
                         </InputGroupAddon>
                         <Input type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handlePasswordChange} required/>
-                      
                       </InputGroup>
+                      <div style={{color:`darkred`}}>{this.message()}</div>
                       <Row>
                         <Col xs="6">
                           <Button color="primary" className="px-4">Login</Button>

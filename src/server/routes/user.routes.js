@@ -24,7 +24,7 @@ module.exports = app => {
     /* FOR MANAGERS */
   
     // Retrieve all Employees by Department
-    router.get("/man/getEmp", user.findEmployeeByDept);
+    router.post("/man/getEmp", user.findEmployeeByDept);
 
     /////////////////////////////////////////////////////
     /* FOR ADMIN */

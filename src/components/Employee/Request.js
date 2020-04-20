@@ -13,6 +13,7 @@ import {
   Label,
   Row,
 } from 'reactstrap';
+import CurrencyInput from '../User/CurrencyInput';
 import AuthService from '../../helper/auth.service'
 import RequestService from '../../helper/request.service';
 
@@ -22,6 +23,7 @@ class Request extends Component{
     this.onAmountChange = this.onAmountChange.bind(this);
     this.onCategoryChange = this.onCategoryChange.bind(this);
     this.onDateChange = this.onDateChange.bind(this);
+    this.onDescriptionChange = this.onDescriptionChange.bind(this);
     this.fileInput = React.createRef();
     this.onPurposeChange = this.onPurposeChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -163,7 +165,7 @@ class Request extends Component{
                       <Label htmlFor="text-input">Amount</Label>
                     </Col>
                     <Col xs="12" md="9">
-                    <Input type="text" pattern="[0-9]*" placeholder="£0.00" onChange={this.onAmountChange} required/>
+                      <CurrencyInput placeholder="£0.00" onChange={this.onAmountChange} required />
                       <FormText color="muted">Please enter expense amount</FormText>
                     </Col>
                   </FormGroup>

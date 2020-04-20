@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Children } from 'react';
 import { Card, CardBody, CardHeader, Col, Row, Table, Badge } from 'reactstrap';
 import AuthService from '../../helper/auth.service';
 import axios from 'axios';
@@ -16,10 +16,10 @@ class EmployeeView extends Component{
       if(status === "Ongoing" || status ==="Flagged"){
         return `warning`;
       }
-      else if(status === "Accepted" || status ==="Flagged - Accepted" ){
+      else if(status === "Accepted" ){
         return `success`;
       }
-      else if(status ==="Denied" || status==="Flagged - Denied"){
+      else if(status ==="Denied"){
         return `danger`;
       }
       else if(status === "Successful" || status ==="Unsuccessful"){
@@ -43,53 +43,21 @@ class EmployeeView extends Component{
 
       componentDidMount(){
         const { currentUser } = this.state;
-        axios.get('http://localhost:3000/api/emp/expense/'+currentUser.id)
-          .then(res => {
-            this.setState({
-              requests: res
-            })
-            console.log(res);
-          })
-          .catch(err => {
-            console.log(err);
+        axios.get('http://localhost:3000/api/emp/expense/'+ currentUser.id)
+        .then(res => {
+          this.setState({
+            requests: res.data
           });
-      }
+          console.log(this.state.requests);
+        })
+        .catch(err => {
+          console.log(err);
+        });
 
-      mapRequests(){
-        let data = [];
-        let requests = this.state.requests;
-        for(let i =0;i<requests.length; i++){
-          data.push({
-            expense_id: requests[i].expense_id,
-            date: requests[i].date,
-            purpose: requests[i].purpose,
-            amount: requests[i].amount,
-            category: requests[i].category,
-            description: requests[i].description,
-            status: requests[i].status
-          });
-        }
-        return (
-          <>
-          {data.length > 0 ? (
-            data.map((s) => {
-              return(
-                <>
-                </>
-              );
-            })
-          ) : (
-            <>
-            </>
-          )}
-          </>
-        );
-        
+
       }
 
   render() {
-    const { currentUser } = this.state.currentUser;
-    const { requests } = this.state.requests;
 
     return (
       <div className="animated fadeIn">
@@ -110,31 +78,21 @@ class EmployeeView extends Component{
                     <th>Description</th>
                     <th>Category</th>
                     <th>Status</th>
+                    <th>View</th>
                   </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>2020-01-14</td>
-                    <td>Business meeting</td>
-                    <td>23.00</td>
-                    <td>Uber</td>
-                    <td>Transport</td>
-                    <td><Badge color="warning">Ongoing</Badge></td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>2020-02-25</td>
-                    <td>Business conference</td>
-                    <td>120.00</td>
-                    <td>Dukes Hotel</td>
-                    <td>Accomodation</td>
-                    <td><Badge color="warning">Ongoing</Badge></td>
-                  </tr>
-
-
                   </thead>
                   <tbody>
-                  <tr>
-                  </tr>
+                      {this.state.requests.map((request) => (
+                        <tr>
+                        <td>{request.expense_id}</td>
+                        <td>{request.date}</td>
+                        <td>{request.purpose}</td>
+                        <td>{request.amount}</td>
+                        <td>{request.description}</td>
+                        <td>{request.category}</td>
+                        <td><Badge color={this.colourChange(request.status)}>{request.status}</Badge></td>
+                        </tr>
+                      ))}
                   </tbody>
                 </Table>
                 </CardBody>

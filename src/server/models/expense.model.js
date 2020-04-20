@@ -35,7 +35,7 @@ module.exports = (sequelize, Sequelize) => {
           allowNull: false
       },
       status: {
-          type: DataTypes.ENUM("Ongoing","Accepted","Denied","Flagged","Flagged - Accepted","Flagged - Denied","Unsuccessful","Successful"),
+          type: DataTypes.ENUM("Ongoing","Accepted","Denied","Flagged","Unsuccessful","Successful"),
           allowNull: true,
           defaultValue: 'Ongoing'
       },

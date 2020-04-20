@@ -1,7 +1,7 @@
 const db = require("../models");
+const Sequelize = require('sequelize');
 const Expense = db.expense;
 const Op = db.Sequelize.Op;
-const Sequelize = require('sequelize');
 
 //const { Op } = require("sequelize");
 
@@ -155,7 +155,7 @@ exports.getCompleteByDept = (req, res) => {
     Expense.findAll({ 
         where: {
             department: department,
-            [Op.is]: [{status: "Successful" || "Unsuccessful"}]
+            status: "Successful"
         }
     })
       .then(data => {
@@ -258,3 +258,4 @@ exports.delete = (req, res) => {
       });
     });
 };
+

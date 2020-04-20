@@ -6,7 +6,8 @@ class ManagerExpense extends Component{
     constructor(props){
         super(props);
       this.state = {
-          currentUser: AuthService.getCurrentUser()
+          currentUser: AuthService.getCurrentUser(),
+          requests: []
       }
     }
     componentWillMount(){
@@ -38,33 +39,11 @@ class ManagerExpense extends Component{
                 <thead>
                 <tr>
                   <th>Expense ID</th>
+                  <th>Employee Name</th>
                   <th>Date</th>
-                  <th>Purpose</th>
                   <th>Amount</th>
-                  <th>Description</th>
                   <th>Category</th>
-                  <th>Status</th>
                 </tr>
-                <tr>
-                  <td>1</td>
-                  <td>2020-01-14</td>
-                  <td>Business meeting</td>
-                  <td>23.00</td>
-                  <td>Uber</td>
-                  <td>Transport</td>
-                  <td><Badge color="warning">Ongoing</Badge></td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>2020-02-25</td>
-                  <td>Business conference</td>
-                  <td>120.00</td>
-                  <td>Dukes Hotel</td>
-                  <td>Accomodation</td>
-                  <td><Badge color="warning">Ongoing</Badge></td>
-                </tr>
-
-
                 </thead>
                 <tbody>
                 <tr>
